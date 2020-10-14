@@ -1,0 +1,23 @@
+// app global css in Stylus form
+a
+  text-decoration none
+
+body
+  &.body--light
+    background $body-bg--light
+    // change base color from #000 to grey-8
+    &,
+    .q-table__card
+    .q-loading
+    .q-uploader__overlay
+    .q-tree__node-header-content
+    .q-toggle__thumb .q-icon
+    .q-slider__track-markers
+    .q-color-picker__header-content--light
+      color $color-base
+  &.body--dark
+    .q-card
+      box-shadow none
+    .q-layout
+      &__shadow:after
+        box-shadow none
