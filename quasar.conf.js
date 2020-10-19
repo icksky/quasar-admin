@@ -93,8 +93,8 @@ module.exports = configure(function (ctx) {
 
       env: {
         API: process.env.API || (ctx.dev
-          ? 'http://mockapi/mock/23'
-          : 'http://mockapi/mock/23'),
+          ? 'http://yapi.weiletest.com/mock/23'
+          : 'http://yapi.weiletest.com/mock/23'),
       },
     },
 
