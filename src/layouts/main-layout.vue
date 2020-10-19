@@ -1,8 +1,12 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <navbar />
+    <navbar
+      v-if="showSidebar"
+    />
 
-    <sidebar />
+    <sidebar
+      v-if="showNavbar"
+    />
 
     <q-page-container>
       <router-view />
@@ -13,6 +17,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
+import settings from 'src/settings'
 import Navbar from './components/navbar/index.vue'
 import Sidebar from './components/sidebar/index.vue'
 
@@ -21,6 +26,12 @@ export default defineComponent({
   components: {
     Navbar,
     Sidebar,
+  },
+  setup () {
+    return {
+      showSidebar: settings.showSidebar,
+      showNavbar: settings.showNavbar,
+    }
   },
 })
 </script>

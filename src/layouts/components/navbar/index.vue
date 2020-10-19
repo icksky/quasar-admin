@@ -8,7 +8,7 @@
       <q-toolbar>
         <div class="class-toolbar--left">
           <q-btn
-            v-if="$q.screen.lt.md"
+            v-if="$q.screen.lt.md && ifShowSidebar"
             flat
             dense
             round
@@ -27,109 +27,10 @@
             @click="$q.dark.toggle()"
           />
 
-          <q-btn-dropdown
+          <navbar-notify
             class="navbar-menu"
-            flat
-            unelevated
-          >
-            <q-icon
-              slot="label"
-              name="las la-bell"
-            >
-              <q-badge
-                color="red"
-                floating
-                label="4"
-              />
-            </q-icon>
-
-            <q-list
-              style="max-width: 300px"
-              separator
-            >
-              <q-item
-                clickable
-                v-ripple
-              >
-                <q-item-section top avatar>
-                  <q-avatar
-                    color="red-6"
-                    text-color="white"
-                    icon="las la-envelope"
-                  />
-                </q-item-section>
-
-                <q-item-section>
-                  <q-item-label>你收到了 1 封邮件</q-item-label>
-                  <q-item-label caption>3小时前</q-item-label>
-                </q-item-section>
-              </q-item>
-
-              <q-item
-                clickable
-                v-ripple
-              >
-                <q-item-section top avatar>
-                  <q-avatar
-                    color="green-6"
-                    text-color="white"
-                    icon="las la-calendar"
-                  />
-                </q-item-section>
-
-                <q-item-section>
-                  <q-item-label>你有一个会议需要确认</q-item-label>
-                  <q-item-label caption>10小时前</q-item-label>
-                </q-item-section>
-              </q-item>
-
-              <q-item
-                clickable
-                v-ripple
-              >
-                <q-item-section top avatar>
-                  <q-avatar
-                    color="blue-6"
-                    text-color="white"
-                    icon="las la-project-diagram"
-                  />
-                </q-item-section>
-
-                <q-item-section>
-                  <q-item-label>贪狼 给你指派了一个任务</q-item-label>
-                  <q-item-label caption>9/26 10:25</q-item-label>
-                </q-item-section>
-              </q-item>
-
-              <q-item
-                clickable
-                v-ripple
-              >
-                <q-item-section top avatar>
-                  <q-avatar
-                    color="red-6"
-                    text-color="white"
-                    icon="las la-bug"
-                  />
-                </q-item-section>
-
-                <q-item-section>
-                  <q-item-label>贪狼 给你抛来了一个 BUG</q-item-label>
-                  <q-item-label caption>9/26 10:25</q-item-label>
-                </q-item-section>
-              </q-item>
-
-              <q-item
-                clickable
-                v-ripple
-                class="text-center text-grey-7"
-              >
-                <q-item-section>
-                  <q-item-label>查看全部消息</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-btn-dropdown>
+            :request="getNavbarNotifies"
+          />
 
           <q-btn-dropdown
             class="navbar-menu"
@@ -184,11 +85,18 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from '@vue/composition-api'
+
+import settings from 'src/settings'
 import { APPModule } from 'store/app'
 import { UserModule } from 'store/user'
+import NavbarNotify from './navbar-notify.vue'
+import { getNavbarNotifies } from './service'
 
 export default defineComponent({
   name: 'Navbar',
+  components: {
+    NavbarNotify,
+  },
   setup (_, { root: { $router, $q } }) {
     const user = reactive({
       name: UserModule.name,
@@ -212,6 +120,8 @@ export default defineComponent({
       logout,
       user,
       showSidebar,
+      ifShowSidebar: settings.showSidebar,
+      getNavbarNotifies,
     }
   },
 })
